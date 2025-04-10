@@ -18,14 +18,17 @@ while True:
 ''')
     if menu == "1":
         # Add task
-        task_name = input("Task To-do: ").lower()
-        task_list.append(task_name)
-        print("Task added successfully!")
-        print("Current Task List:")
-        index = 0
-        for task in task_list:
-          index += 1
-          print(f"{index} : {task}")
+        task_name = input("Task To-do: ").lower().strip()
+        if task_name:
+          task_list.append(task_name)
+          print("Task added successfully!")
+          print("Current Task List:")
+          index = 0
+          for task in task_list:
+            index += 1
+            print(f"{index} : {task}")
+        else:
+          print("Task List cannot be Empty")
     elif menu == "2":
        if not task_list:
           print("Task list is empty. Nothing to remove")
