@@ -47,6 +47,10 @@ fruits = ["apple", "banana", "cherry"]
 new_fruits = [x for x in fruits if "a" in x]
 print(new_fruits)
 
+# enumerate() is a built-in Python function used in loops to automatically add an index (or counter) 
+# to each item in an iterable (like a list, tuple, etc.).
+
+
 # Built-in Functions
 print(len(cars))         # Length of list
 print('Audi' in cars)    # Check if an item exists
