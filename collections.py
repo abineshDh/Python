@@ -134,29 +134,119 @@ print(mylist)
 
 # ======================================================================================================
 
-# SET - Unordered & Immutable
+# SET - Unordered & Immutable (unchangeable), unindexed, and does not allow duplicate values
 bikes = {"Pulsar", "Apache", "Kawazaki", "Enfield", "Jawa"}
 
 print(bikes)
-print(len(bikes))            # Length of set
-print("Pulsar" in bikes)     # Check membership
+print(len(bikes))  # Length of set
+print("Pulsar" in bikes)  # Check membership
+
+# set() - Constructor used to make a set
+list = {1, 2, 3, 4, 5}
+set = set((list))
+
+# Loop through a Set
+for bike in bikes:
+    print(bike)
 
 # Add / Remove
-bikes.add("KTM")             # Add item
+bikes.add("KTM")  # Add item
+print(bikes)
+bikes.add("Bajaj")  # Add another item
+
+# Add items from one set to another set
+bikes = {"Pulsar", "Apache", "Kawazaki", "Enfield", "Jawa"}
+Scooter = {"Dio", "RayZ", "Access125", "Ola", "Aether"}
+bikes.update(Scooter)  # Add all items from Scooter to bikes
 print(bikes)
 
-bikes.remove("KTM")          # Remove item
+# Remove an item
+# bikes.remove("KTM")  # Uncomment to remove "KTM"
 print(bikes)
 
-bikes.pop()                  # Remove random item (unordered)
-print(bikes)
+# If remove() doesn't work, use discard() to remove an item
+bikes.discard("Dio")
 
-# The del keyword can also delete the list completely.
-# del bikes
+# Remove a random item (unordered)
+bikes.pop()
+print(bikes)
 
 # Clear all items (optional)
 bikes.clear()
 print(bikes)
+
+# Note: 1 and True are treated as the same value in a set, considered duplicates
+values = {0, 1, True, False}
+print(values)
+
+# To join SETs
+# ------------
+
+# The union() method joins all items from both sets, excluding duplicates
+setA = {"a", "b", "c", "d"}
+setB = {1, 2, 3, 4, 5}
+setC = setA.union(setB)
+print(setC)
+
+# The intersection() method keeps ONLY the duplicates
+set1 = {"apple", "banana", "cherry"}
+set2 = {"google", "microsoft", "apple"}
+set3 = set1.intersection(set2)
+print(set3)  # Print only the duplicates
+
+# The difference() method keeps items from the first set that are not in the other set(s)
+setX = {"apple", "banana", "cherry"}
+setY = {"google", "microsoft", "apple"}
+setZ = setX.difference(setY)
+print(setZ)
+
+# The symmetric_difference() method keeps all items EXCEPT the duplicates
+setM = {"apple", "banana", "cherry"}
+setN = {"google", "microsoft", "apple"}
+setO = setM.symmetric_difference(setN)
+print(setO)
+
+# Set Methods:
+# | Method               | Description                                                        |
+# |----------------------|--------------------------------------------------------------------|
+# | add(elem)            | Adds a single element to the set                                  |
+# | update(iterable)     | Adds multiple elements (from list, tuple, etc.) to the set        |
+# | remove(elem)         | Removes the specified element. Raises KeyError if not found      |
+# | discard(elem)        | Removes the specified element. Does not raise an error if not found |
+# | pop()                | Removes and returns a random element from the set                |
+# | clear()              | Removes all elements from the set                                |
+
+# Additional Set Methods:
+# | Method                  | Description                                                   |
+# |-------------------------|---------------------------------------------------------------|
+# | union(set)              | Returns a new set with all elements from both sets            |
+# | intersection(set)       | Returns a set of common elements                              |
+# | difference(set)         | Returns a set of elements in this set but not in the other    |
+# | symmetric_difference(set)| Returns elements not common to both sets                     |
+
+# -------------------------------------------------------------------------------------
+# | Method                        | Description                                      |
+# |------------------------------|--------------------------------------------------|
+# | set()                        | Creates a new empty set                          |
+# | add(elem)                    | Adds a single element to the set                |
+# | update(iterable)            | Adds multiple elements to the set               |
+# | remove(elem)                | Removes element; raises error if not found      |
+# | discard(elem)               | Removes element; does nothing if not found      |
+# | pop()                       | Removes and returns a random element            |
+# | clear()                     | Removes all elements from the set               |
+# | union(set)                  | Returns all elements from both sets             |
+# | intersection(set)           | Returns common elements between sets            |
+# | difference(set)             | Returns elements only in the first set          |
+# | symmetric_difference(set)   | Returns elements not common to both sets        |
+# | intersection_update(set)    | Keeps only common elements in original set      |
+# | difference_update(set)      | Removes elements found in another set           |
+# | symmetric_difference_update(set) | Updates set with uncommon elements         |
+# | issubset(set)               | Checks if current set is a subset               |
+# | issuperset(set)             | Checks if current set is a superset             |
+# | isdisjoint(set)             | Checks if sets have no common elements          |
+# ---------------------------------------------------------------------------------
+
+# ===================================================================================================================================================
 
 # TUPLE - Ordered & Unchangeable
 vehicles = ("Cars", "Bikes", "Bus", "Train", "Cycle", "Airplane")
