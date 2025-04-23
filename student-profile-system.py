@@ -2,7 +2,6 @@
 
 # student_profile dict
 student_profile = {}
-
 while True:
     user_input = str(input(
 '''
@@ -15,11 +14,8 @@ while True:
     6. Delete a Field
     7. Convert to Tuple
     8. Exit
----------------------------------------------------------------------
-    Enter an option to select:
-'''
-    )).strip()
-
+-------------------------------------
+    Enter an option to select: ''')).strip()
     # Add profile
     if user_input == '1':
         #name
@@ -49,7 +45,6 @@ while True:
         #loop through student profile to display
         for key, value in student_profile.items():
             print(f"{key.capitalize()} : {value}")
-
     # View profile
     elif user_input == '2':
         if student_profile:
@@ -71,7 +66,6 @@ while True:
                     print(f"{key.capitalize()} : {value}")
         else:
             print("No data to print.")
-
     # Add Skill
     elif user_input == '3':
         new_skill_input = input("Enter new skills to add seperated them by comma: ").strip()
@@ -95,7 +89,6 @@ while True:
                 print("No skills were added!")
         else:
             print("Please enter a valid skill")
-
     # View Skills
     elif user_input =='4':
         if 'skills' in student_profile and isinstance(student_profile['skills'], list):
@@ -107,19 +100,48 @@ while True:
         else:
             print("Skills not found")
         print(f"\n Total Skills: {count}")
-
-
     # Update Address
     elif user_input == '5':
         if 'address' in student_profile and isinstance(student_profile['address'], dict):
-            print("\n Current Address:")
+            print("\n Current Address: ")
             for key, value in student_profile['address'].items():
-                print(f"{key.capitlize()} : {value}")
-
+                print(f"{key.capitalize()} : {value}")
+            # change of address
+            address_input = input("What would you like to update (City / Country): ").strip().lower()
+            if address_input in student_profile['address']:
+                student_profile['address'][address_input] = input(f"Enter the {address_input.capitalize()} name to change: ").strip().title()
+                print(f"{address_input.capitalize()} is updated")
+            else:
+                print("Please Enter a valid option!")
+        else:
+            print("Address not found! Make sure to create a Profile first.")   
+    # Delete a field
+    elif user_input == '6':
+        if student_profile:
+            # get the field to remove
+            for key in student_profile:
+                print(key.capitalize())
+            remove_field = input('''
+            Enter the field you want to remove from the list -
+            ''').strip().lower()
+            # check the field in student profile and removes it
+            if remove_field in student_profile:
+                student_profile.pop(remove_field)
+                print(f"{remove_field.capitalize()} field has been removed!")
+            else:
+                print(f"{remove_field} not found! enter a valid name")
+        else:
+            print("Student profile not found!")
+    # convert to Tuple
+    elif user_input == '7':
+        student_tuple = tuple(student_profile.items())
+        for index, (key, value) in enumerate(student_tuple, start=1):
+            print(f"{index}. {key.capitalize():<15} : {value}")
+        print(f"Total fields converted: {len(student_tuple)}\n")
+    # Exit  
     elif user_input == '8':
         print('Thank you! Have a Nice day!')
         break
-
     else:
         print("Enter a valid option")
   
