@@ -1,5 +1,4 @@
 # List Excercises ========================================================================================================
-
 # Sum of all Elements in the list
 num = [124, 1234, 1323, 1324, 324, 209,243,335 ,53]
 sum = 0
@@ -116,7 +115,6 @@ set_y = {3, 4, 5, 6}
 uncommon_elements = set_x.symmetric_difference(set_y)
 print(uncommon_elements)
 
-# 
 fruits = {"apple", "banana", "mango"}
 fruits.clear()
 print(fruits)
@@ -134,6 +132,87 @@ for word in words:
     for char in word:
         unique_chars.add(char)  #
 print(unique_chars)
+
+# ============================================================================================================================
+
+# Dictionary excercise
+blog = dict()
+
+blog = {
+   'name' : 'Rocky',
+   'color' : 'Golden Brown',
+   'breed' : 'Country Dog',
+   'age' : 3,
+   'legs' : 4
+}
+
+# Create a student (shinobi) dictionary
+shinobi = {
+    'first_name': 'Naruto',
+    'last_name': 'Kumar',
+    'gender': 'male',
+    'age': 22,
+    'marital_status': 'married',
+    'spouse': 'Hinata',
+    'is_shinobi': True,
+    'Height': 170.56,
+    'skills': ['Taijutsu', 'Ninjutsu', 'Sage mode', 'Nine Tails Chakra', 'Baryon mode'],
+    'address': {
+        'street': 'leaf street',
+        'city': 'Konoha',
+        'country': 'Medieval-Japan'
+    },
+    'city': 'Konoha',
+    'country': 'Japan',
+}
+
+# print length of dict
+print(len(shinobi))
+print(len(blog))
+
+# get values , find datatypes, should be a list
+print(shinobi.get('skills'))
+print(shinobi['skills'])
+print(type(shinobi['skills']))
+
+# add values to the list of skills:key
+shinobi['skills'].append('Rasengan')
+shinobi['skills'].extend(['Shadow Clone Jutsu', 'Chidori'])
+print(shinobi['skills'])
+
+# get the dictionary keys as a list
+print(shinobi.keys())
+
+# get the dictionary values as a list
+print(shinobi.values())
+
+# change dictionary to a tuples
+shinobi.items()
+print(shinobi)
+
+# remove an item
+shinobi.pop('Height')
+print(shinobi)
+
+# delete a dict
+del blog
+# print(blog)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
