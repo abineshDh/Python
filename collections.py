@@ -267,7 +267,11 @@ print(vehicles.count("Cycle"))   # Count occurrence of item
 for vehicle in vehicles:
   print(vehicle)
 
-# # Simple Shopping cart Program
+print(type(cars))
+print(type(bikes))
+print(type(vehicles))
+
+# Simple Shopping cart Program
 foods = []
 prices = []
 total = 0
@@ -291,10 +295,6 @@ for price in prices:
   total += price
 
 print(f"Your Total is: ${total: .2f}")
-
-print(type(cars))
-print(type(bikes))
-print(type(vehicles))
 
 # =================================================================================================================
 
@@ -389,8 +389,8 @@ dict1 = {
     'title' : 'Fastest Hands of the Wild West',
     'Role' : 'Gunslinger'
 }
-dick_copy = dict1.copy()
-print(dick_copy)
+_copy = dict1.copy()
+print(_copy)
 
 # loop through a dictionary - normal for loop only return key values
 print("Loop dict1 - return only keys")

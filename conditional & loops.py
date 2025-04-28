@@ -157,10 +157,10 @@ import math
 while True:
     try:
         print("\n📌 MENU OPTIONS:")
-        print("1️⃣ Check Even or Odd")
-        print("2️⃣ Print Multiplication Table")
-        print("3️⃣ Find Factorial")
-        print("4️⃣ Exit")
+        print("1️ Check Even or Odd")
+        print("2️ Print Multiplication Table")
+        print("3️ Find Factorial")
+        print("4️ Exit")
         choice = int(input("Enter your choice (1-4): "))
         
         if choice == 4:
