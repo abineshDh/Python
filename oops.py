@@ -1,4 +1,4 @@
-# ======================================================
+ # ======================================================
 # OOPs - OBJECT-ORIENTED PROGRAMMING STRUCTURE
 # ======================================================
 
@@ -97,8 +97,10 @@ mybook = Book("Great Gatsby", 1990)
 print(mybook)
 
 # self - reference to the current instance of the class, allows to access the attributes and methods of the object
-# __init__ - it is a constructor method in python, automatically called when a new object is created. it initializes the attributes of the class
-# __str__ - allows us to define custom string reperesentation of the object. defines a string represent when you print an object
+# __init__ - it is a constructor method in python, automatically called when a new object is created. 
+# it initializes the attributes of the class.
+# __str__ - allows us to define custom string reperesentation of the object. 
+# defines a string represent when you print an object.
 
 # @Class Variables
 # These are the variables that are shared across all instances of a class. It is defined at the class level, outside any methods. 
@@ -125,6 +127,7 @@ class Bike:
         self.brand = "Bajaj"
         self.model = "Pulsar N150"
         self.year = 2022
+        print("Default Constructor Called")
 bike = Bike()
 print(bike.model)
 print(bike.brand)
@@ -187,6 +190,8 @@ print(person.name) # accessed
 class Person:
     def __init__(self):
         self._age = 20
+    def age(self):
+        return self._age
 class Employee(Person):
     def display_age(self):
         print(self._age)
@@ -257,10 +262,10 @@ class Product:
         self.__price = 0
         self.__name = ''
     # getters
-    @property
+    @property.getter
     def price(self):
         return self.__price
-    @property
+    @property.getter
     def name(self):
         return self.__name
     # setters
@@ -628,4 +633,179 @@ vehicle_info = vehicle.display_vehicle_info()
 for key, value in vehicle_info.items():
     print(f"{key} : {value}")
 
+
+# **Multiple Inheritence** a child class can inherits the properties of more than one parent class, the derived class can inherits al the properties of base class
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def show_name(self):
+        print(f"Name: {self.name}, Age: {self.age}")
+
+class Work:
+    def __init__(self, job_title):
+        self.job_title = job_title
+    
+    def show_job(self):
+        print(f"Job : {self.job_title}")
+
+# inherits from both the parents class
+class Employee(Person, Work):
+    def __init__(self, name, age, job_title, salary):
+        # initializes parent class constructor
+        Person.__init__(self, name, age)
+        Work.__init__(self, job_title)
+        self.salary = salary 
+        
+    def show_details(self):
+        print(f'''
+        Employee Name   : {self.name}
+        Employee Age    : {self.age}
+        Employee Job    : {self.job_title}
+        Employee Salary : {self.salary}
+        ''')
+employee = Employee("Abinesh", 23, "Developer", 25000)
+employee.show_details()
+employee.show_job()
+employee.show_name()
+
+print(Employee.__mro__) 
+
+#MRO is the order in which Python searches classes when you call a method or initialize with super() in multiple inheritance.
+# Cooperative Initialization is when all classes in a multiple inheritance chain use super(), so each class has a chance to initialize its own data safely.
+#Each __init__() calls super().__init__(), and Python moves through the MRO in order.
+
+# | Term                    | Meaning                                                                   |
+# |-------------------------|-------------------------------------------------------------------------  |
+# | **MRO**                 | Order Python uses to search for methods in multiple inheritance.          |  
+# | **super()**             | Calls the next class in the MRO.                                          |
+# | **Cooperative Init**    | Every class uses `super()` to allow smooth, conflict-free initialization. |
+
+# | Benefit                              | Why it matters                                                |
+# |------------------------------------------------------------------------------------------------------|
+# | Allows all classes to be initialized | Even if they don’t know all the arguments upfront             |
+# | Enables MRO-safe `super()` chains    | Prevents double initialization and missing arguments          |
+# | Makes code cleaner and extensible    | Easy to add new parent classes later without breaking others  |
+
+# Constructor chaining means calling one constructor from another in a multi-class inheritance hierarchy, ensuring that all parent class 
+# constructors get called automatically and in the right order.
+
+class Person:
+    def __init__(self, name, age, **kwargs):
+        super().__init__(**kwargs)
+        self.name = name
+        self.age = age
+        print("Person Constructor Called")
+    
+class Work:
+    def __init__(self, job, **kwargs):
+        super().__init__(**kwargs)
+        self.job = job
+        print("Work class Contructor called")
+
+class Employee(Work, Person):
+    def __init__(self, name, age, job, salary ):
+        super().__init__(name=name, age=age, job=job)
+        self.salary = salary
+        print("Employee class constructor called")
+
+emp = Employee("Abinesh", 24, "Developer", 22000)
+
+# Excercise
+# Smart Device System
+
+# Base: 1
+class Device:
+    def __init__(self, brand, model, **kwargs):
+        super().__init__(**kwargs)
+        self.brand = brand
+        self.model = model
+    
+    def device_info(self):
+        print("Device Info: \n" + "-" * 20)
+        print(f"Brand    : {self.brand}")
+        print(f"Model    : {self.model}")
+        
+# Base: 2
+class Connectivity:
+    def __init__(self, bluetooth, wifi_enabled, **kwargs):
+        super().__init__(**kwargs)
+        self.bluetooth = bluetooth
+        self.wifi_enabled = wifi_enabled
+        
+    def connectivity_info(self):
+        print("Connectivity Info: \n" + "-" * 20)
+        print(f"Bluetooth:   {self.bluetooth}")
+        print(f"WiFi     :   {self.wifi_enabled}")
+    
+# Child: 1
+class SmartPhone(Device, Connectivity):
+    def __init__(self, brand, model, bluetooth, wifi_enabled, os, **kwargs):
+        super().__init__(brand=brand, 
+                         model=model, 
+                         bluetooth=bluetooth, 
+                         wifi_enabled=wifi_enabled, 
+                         **kwargs)
+        self.os = os
+        
+    def phone_info(self):
+        print("Smartphone Info: \n" + "-" * 20)
+        smartphone = {
+            "Brand"      : self.brand,      
+            "Model"      : self.model,
+            "OS"         : self.os,
+            "Bluetooth"  : self.bluetooth,
+            "WiFi"       : self.wifi_enabled
+        }
+        for key, value in smartphone.items():
+            print(f"{key:<15} : {value}")  # Left-align keys with a width of 15
+
+
+# Child: 2
+class SmartWatch(Device, Connectivity):
+    def __init__(self, brand, model, bluetooth, wifi_enabled, heart_rate_monitor, **kwargs):
+        super().__init__(brand=brand, 
+                         model=model, 
+                         bluetooth=bluetooth, 
+                         wifi_enabled=wifi_enabled, 
+                         **kwargs)
+        self.heart_rate_monitor = heart_rate_monitor
+    
+    def watch_info(self):
+        print("Smartwatch Info: \n" + "-" * 20)
+        smartwatch = {
+            "Brand"              : self.brand,      
+            "Model"              : self.model,
+            "Heart Rate Monitor" : self.heart_rate_monitor,
+            "Bluetooth"          : self.bluetooth,
+            "WiFi"               : self.wifi_enabled
+        }
+        for key, value in smartwatch.items():
+            print(f"{key:<20} : {value}")  # Left-align keys with a width of 20
+
+# Smart Phone Object
+smartphone = SmartPhone(
+    brand="Samsung",
+    model="Galaxy S22",
+    os="Android Pi",
+    bluetooth="Yes",
+    wifi_enabled="Enabled"
+)
+
+smartphone.phone_info()
+smartphone.device_info()
+
+# Smart Watch Object
+smartwatch = SmartWatch(
+    brand="Apple",
+    model="Watch Series 9",
+    heart_rate_monitor="Yes",
+    bluetooth="Yes",
+    wifi_enabled="Disabled"
+)
+
+smartwatch.watch_info()
+smartwatch.device_info()
 
