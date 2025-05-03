@@ -487,7 +487,8 @@ print(employee.name, employee.id)
 # can access the attributes of parent class by object creation
 
 # __init__() function is a constructor method in Python. 
-# It initializes the object’s state when the object is created. If the child class does not define its own __init__() method, it will automatically inherit the one from the parent class.
+# It initializes the object’s state when the object is created. If the child class does not define its own __init__() method, 
+# it will automatically inherit the one from the parent class.
 
 # super() constructor used to call the parent class methods, used with child class __init__ method to initialize inherited attributes
 # To reuse code from the parent class.
@@ -674,8 +675,8 @@ employee.show_name()
 print(Employee.__mro__) 
 
 #MRO is the order in which Python searches classes when you call a method or initialize with super() in multiple inheritance.
-# Cooperative Initialization is when all classes in a multiple inheritance chain use super(), so each class has a chance to initialize its own data safely.
-#Each __init__() calls super().__init__(), and Python moves through the MRO in order.
+# Cooperative Initialization is when all classes in a multiple inheritance chain use super(), so each class has
+# a chance to initialize its own data safely. Each __init__() calls super().__init__(), and Python moves through the MRO in order.
 
 # | Term                    | Meaning                                                                   |
 # |-------------------------|-------------------------------------------------------------------------  |
@@ -760,8 +761,7 @@ class SmartPhone(Device, Connectivity):
             "WiFi"       : self.wifi_enabled
         }
         for key, value in smartphone.items():
-            print(f"{key:<15} : {value}")  # Left-align keys with a width of 15
-
+            print(f"{key:<15} : {value}")  
 
 # Child: 2
 class SmartWatch(Device, Connectivity):
@@ -783,7 +783,7 @@ class SmartWatch(Device, Connectivity):
             "WiFi"               : self.wifi_enabled
         }
         for key, value in smartwatch.items():
-            print(f"{key:<20} : {value}")  # Left-align keys with a width of 20
+            print(f"{key:<20} : {value}")  
 
 # Smart Phone Object
 smartphone = SmartPhone(
@@ -808,4 +808,433 @@ smartwatch = SmartWatch(
 
 smartwatch.watch_info()
 smartwatch.device_info()
+
+# ** Multilevel Inheritance ** - Multilevel inheritance means a class is derived from a class that is already derived from another class — forming a chain of inheritance.
+#  It allows a class to inherit properties and methods from multiple parent classes, forming a hierarchy similar to a family tree. 
+
+
+# Base class
+class Person:
+    def __init__(self, name, **kwargs):
+        super().__init__(**kwargs)
+        self.name = name
+        
+    def show_name(self) -> None:
+        print(f"Person Name is:({self.name})")
+
+# Intermediary class - inherits from Base class and also acts as a parent class
+class Student(Person):
+    def __init__(self, name, stud_id, **kwargs):
+        super().__init__(name, **kwargs)
+        self.stud_id = stud_id
+        
+    def show_id(self) -> None:
+        print(f"{self.name} student Id is: ({self.stud_id})")
+        
+# Derived Class - Inherits from both Base and Intermediary class
+class GraduateStudent(Student):
+    def __init__(self, name, stud_id, degree, **kwargs):
+        super().__init__(name, stud_id, **kwargs)
+        self.degree = degree
+        
+    def show_degree(self) -> None:
+        print(f"{self.name} has completed ({self.degree}) in 2023")
+    
+    def run(self):
+        self.show_name()
+        self.show_id()
+        self.show_degree()
+
+# object creation
+student = GraduateStudent(
+    name="Abinesh",
+    stud_id=45686,
+    degree="BCA"
+)
+
+# student.run()
+student.show_name() # From Person Class
+student.show_id() # From Student Class
+student.show_degree() # From GraduateStudent Class
+
+# Excercise
+# Mutiple Inheritance
+class Person:
+    def __init__(self, name, age, **kwargs):
+        super().__init__(**kwargs)
+        self.name = name
+        self.age = age
+        
+        
+    def person_info(self) -> dict:
+        display_person: dict = {}
+        display_person['name'] = self.name
+        display_person['age'] = self.age
+        return display_person
+
+class Doctor(Person):
+    def __init__(self, name, age, specialization, **kwargs):
+        super().__init__(name, age, **kwargs)
+        self.specialization = specialization
+        
+    def doctor_info(self) -> dict:
+        # call the parent class method to override them
+        display_person: dict = super().person_info()
+        display_person['specialization'] = self.specialization
+        return display_person
+
+class Surgeon(Doctor):
+    def __init__(self, name, age, specialization, surgery_type, **kwargs):
+        super().__init__(name, age, specialization, **kwargs)
+        self.surgery_type = surgery_type
+        
+    def display_surgeon_info(self) -> None:
+        display_person: dict = super().doctor_info()
+        display_person['surgery type'] = self.surgery_type
+        for key, value in display_person.items():
+            print(f"{key:<20} : {value}")
+            
+    def show_info(self):
+        self.display_surgeon_info()
+        
+# object creation
+doctor = Surgeon(
+    name="Abinesh",
+    age=24,
+    specialization="Orthopedics",
+    surgery_type="Bone Replacement"
+)
+
+doctor.show_info()
+print(doctor.person_info())
+print(doctor.doctor_info())
+print(doctor.show_info())
+
+# ** Hierarchical Inheritance** - where the multiple child class inherits the properties and attributes of the Same Parent class - promotes code reuability and polymorphism
+# each subclass overrides the parent class method
+             
+
+class Animal:
+    def __init__(self, name, **kwargs):
+        super().__init__(**kwargs)
+        self.name = name
+        
+    def sound(self):
+        print(f"This {self.name} makes this sound!")
+        
+class Dog(Animal):
+    def __init__(self, name, **kwargs):
+        super().__init__(name, **kwargs)
+        
+    def sound(self):
+        print(f"{self.name} Barks!")
+        
+class Cat(Animal):
+    def __init__(self, name, **kwargs):
+        super().__init__(name, **kwargs)
+        
+    def sound(self):
+        print(f"{self.name} meows!")
+        
+class Lion(Animal):
+    def __init__(self, name, **kwargs):
+        super().__init__(name, **kwargs)
+        
+    def sound(self):
+        print(f"{self.name} Roars!") 
+        
+cat = Cat("Snowbell")
+cat.sound()       
+
+dog = Dog("Rocky")
+dog.sound()
+
+lion = Lion("Simba")
+lion.sound()
+
+animal = Animal("Ajay")
+animal.sound()
+
+# Excerscise
+# School Members
+
+class SchoolMember:
+    def __init__(self, name, age, **kwargs):
+        super().__init__(**kwargs)
+        self.name = name
+        self.age = age
+        
+    def get_details(self) -> dict:
+        details: dict = {
+            "Name": self.name,
+            "Age": self.age
+        }
+        return details
+
+
+class Student(SchoolMember):
+    def __init__(self, name, age, grade, **kwargs):
+        super().__init__(name, age, **kwargs)
+        self.grade = grade
+        
+    def get_details(self) -> None:
+        details = super().get_details()
+        details['Grade'] = self.grade
+        print(f"Student Details \n" + "-" * 20)
+        for key, value in details.items():
+            print(f"{key:<10} : {value}")
+
+
+class Teacher(SchoolMember):
+    def __init__(self, name, age, subject: list, **kwargs):
+        super().__init__(name, age, **kwargs)
+        self.subject = subject
+        
+    def get_details(self) -> None:
+        details = super().get_details()
+        details['Subjects'] = ", ".join(self.subject)  
+        print(f"Teacher Details \n" + "-" * 20)
+        for key, value in details.items():
+            print(f"{key:<10} : {value}")
+
+
+class Principal(SchoolMember):
+    def __init__(self, name, age, experience, **kwargs):
+        super().__init__(name, age, **kwargs)
+        self.experience = experience
+        
+    def get_details(self) -> None:
+        details = super().get_details()
+        details['Experience'] = f"{self.experience} years"
+        print(f"Principal Details \n" + "-" * 20)
+        for key, value in details.items():
+            print(f"{key:<10} : {value}")
+
+student = Student(
+    name="Abinesh",
+    grade="10th",
+    age="17"
+)
+student.get_details()
+
+teacher = Teacher(
+    name="Savitha",
+    age="25",
+    subject=["Tamil", "English", "Maths"]
+)
+teacher.get_details()
+
+principal = Principal(
+    name="Kamala",
+    age="35",
+    experience="5"
+)
+principal.get_details()
+                                             
+# **Hybrid Inheritance** - Combination of singe, multiple, multilevel inheritance to achieve Hybrid Inheritance - like all the Child class can inherit from parent class and vice versa
+
+# Excercise
+# Smart Home System
+
+# Base 1
+class Device:
+    def __init__(self, brand, model, power_status=False, **kwargs):
+        super().__init__(**kwargs)
+        self.brand = brand
+        self.model = model
+        self.power_status = power_status
+        
+    def turn_on(self):
+        if not self.power_status:
+            self.power_status = True
+            print(f"{self.brand} {self.model} is now powered ON")
+        else:
+            print(f"{self.brand} {self.model} is already ON")
+    
+    def turn_off(self):
+        if self.power_status:
+            self.power_status = False
+            print(f"{self.brand} {self.model} is now powered OFF")
+        else:
+            print(f"{self.brand} {self.model} is already OFF")
+
+# Base 2
+class Connectivity:
+    def __init__(self, wifi_enabled, bluetooth_enabled, **kwargs):
+        super().__init__(**kwargs)
+        self.wifi_enabled = wifi_enabled
+        self.bluetooth_enabled = bluetooth_enabled
+        
+    def connect_wifi(self):
+        if not self.wifi_enabled:
+            print(f"{self.brand} - {self.model} WiFi not available")
+        else:
+            print(f"{self.brand} - {self.model} WiFi Connected")
+             
+    def connect_bluetooth(self):
+        if not self.bluetooth_enabled:
+            print(f"{self.brand} - {self.model} Bluetooth not available")
+        else:
+            print(f"{self.brand} - {self.model} Connected via Bluetooth")
+            
+# Derived 1 - inherit from Base 1 and Base 2
+class SmartTV(Device, Connectivity):
+    def __init__(self, brand, model, wifi_enabled, bluetooth_enabled, screen_size, resolution, **kwargs):
+        super().__init__(brand=brand, model=model, wifi_enabled=wifi_enabled, bluetooth_enabled=bluetooth_enabled, **kwargs)
+        self.screen_size = screen_size
+        self.resolution = resolution
+        
+    def stream_app(self, app_name):
+        print(f"Streaming {app_name} on {self.brand} SmartTV.")
+
+# Derived 2 - inherit from Base 1 only
+class SmartLight(Device):
+    def __init__(self, brand, model, power_status, color, brightness, **kwargs):
+        super().__init__(brand, model, power_status, **kwargs) 
+        self.color = color
+        self.brightness = brightness
+        
+    def change_color(self, color):
+        self.color = color
+        print(f"Light color changed to {self.color}.")
+    
+    def dim_light(self, brightness):
+        self.brightness = brightness
+        print(f"Brightness set to {self.brightness}%.")
+
+# Test SmartTV
+tv = SmartTV("Samsung", "QLED-X", True, True, "55 inch", "4K")
+tv.turn_on()
+tv.connect_wifi()
+tv.stream_app("Netflix")
+
+# Test SmartLight
+light = SmartLight("Philips", "Hue", False, "White", 100)
+light.turn_on()
+light.change_color("Blue")
+light.dim_light(50)
+
+for cls in SmartTV.__mro__:
+    print(cls)
+    
+
+# SmartTV: Inherits from both Device and Connectivity → Hybrid Inheritance
+# SmartLight: Inherits only from Device → Shows hierarchical structure
+# Connectivity & Device have no relation to each other, but are mixed in SmartTV.
+
+# Multiple Inheritance: SmartTV(Device, Connectivity)
+# Hierarchical Inheritance: Both SmartTV and SmartLight inherit from Device
+
+# | **Type of Inheritance**      | **Description**                                           | **Example** Structure          | **Use Case / Notes**                                                |
+# |------------------------------|-----------------------------------------------------------|--------------------------------|---------------------------------------------------------------------|
+# | **Single Inheritance**       | One child class inherits from one parent class            | `Child → Parent`               | Simple reusability of methods/attributes                            |
+# | **Multiple Inheritance**     | One child class inherits from multiple parent classes     | `Child → Parent1, Parent2`     | Use `super()` carefully; leads to MRO and potential diamond problem |
+# | **Multilevel Inheritance**   | A class inherits from a child class of another class      | `Grandchild → Child → Parent`  | Enables layer-wise specialization                                   |
+# | **Hierarchical Inheritance** | Multiple child classes inherit from a single parent class | `Child1, Child2 → Parent`      | Common base logic for different child roles                         |
+# | **Hybrid Inheritance**       | Combination of two or more types of inheritance           | Mix of above types             | Often uses `super()` and `**kwargs` to manage complexity            |
+
+# Concept	Meaning	Example / Note
+# super()	Calls the next constructor/method in the MRO chain	super().__init__()
+# **kwargs in init	Helps pass unused args up the chain — essential for cooperative multiple inheritance	Used in all constructors: def __init__(..., **kwargs)
+# Method Resolution Order (MRO)	The order Python follows to search methods in multiple inheritance	ClassName.__mro__ or help(ClassName)
+
+# ===============
+# POLYMORPHISM
+# ===============
+
+# Polymorphism means "many forms". In python, it allows us to to define different class with the same method name, but the methods can perform different actions according to the context of the classes objects
+# Types of Polymorphism
+
+# | **Type**                    | **Description**                                                                           | **Example**                                |
+# |-----------------------------|------------------------------------------------------------------------------------------ |--------------------------------------------|
+# | **1. Compile-time (Static)**| Achieved using method overloading (not natively supported in Python)                      | Function with default args / `*args`       |
+# | **2. Run-time (Dynamic)**   | Achieved via method overriding — child class provides specific implementation of a method | Subclass overrides method from superclass  |
+# | **3. Duck Typing**          | Python-specific: behavior depends on method availability, not class inheritance           | "If it quacks like a duck…"                |
+
+
+# Runtime polymorphism - Dynamic Polymorphism - can achieved by using Method Overriding
+# a child class overrides the parent class method on the context of objects
+
+class Animal:
+    def sound(self):
+        print("Some sound")
+
+class Dog(Animal):
+    def sound(self):
+        print("Bark")
+
+class Cat(Animal):
+    def sound(self):
+        print("Meow")
+
+# Runtime polymorphism
+def make_sound(animal):
+    animal.sound()
+
+make_sound(Dog())  # Bark
+make_sound(Cat())  # Meow
+
+# ***Duck Typing*** is a concept where the type or class of an object is less important than the methods it defines or the behavior it exhibits.
+# "If it looks like a duck, swims like a duck, and quacks like a duck — then it probably is a duck."
+# Python doesn’t care what type an object is — if the object implements the expected methods/attributes, it can be used as needed.
+
+class Duck:
+    def quack(self):
+        print("Quack!")
+
+class Person:
+    def quack(self):
+        print("I'm pretending to be a duck!")
+
+def make_it_quack(entity):
+    entity.quack()
+
+make_it_quack(Duck())     
+make_it_quack(Person())   
+
+
+# ===============
+# ABSTRACTION
+# ===============
+
+# Abstraction hides the complex implementation details while showing only the important datas and functions of the objects. It makes the code reusable, modular  and well-organized
+# In Python, we can achieve data abstraction by using abstract classes and abstract classes can be created using abc (abstract base class) module and abstractmethod of abc module.
+# @abstractmethod decorator from the abc module
+
+# ABSTRACT CLASS AND METHODS:
+
+# Abstract Class - An abstract class acts as a blueprint for other classes. It contains one or more abstract methods and cannot be instantiated.
+# Abstract method - when a method is declared in a class without implementation details its called an abstract method
+# Abstract method of base class force its child class to write the implementation of the all abstract methods defined in base class
+
+from abc import ABC, abstractmethod
+class BaseClass(ABC):
+    @abstractmethod
+    def method_1(self):
+         #empty body
+         pass
+     
+# Concrete method - when a method in an abstract class with its complete implementation details given. reduces redundant of code only declared in parent class to be reused in subclass
+
+class Car(ABC):
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+        self.engine_started = True
+
+    def startEngine(self):
+        if not self.engine_started:
+            print(f"Starting the {self.model}'s engine.")
+            self.engine_started = True
+        else:
+            print("Engine is already running.")
+            
+# | Term              | Description                                   | 
+# |-------------------|-----------------------------------------------|
+# | Abstract Class     | Blueprint with abstract methods              | 
+# | ABC module         | Used to define abstract base classes         | 
+# | Abstract Method    | Must be overridden by subclasses             | 
+# | Concrete Method    | Already implemented, can be used as-is       | 
+
 
