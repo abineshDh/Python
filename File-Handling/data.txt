@@ -1,0 +1,7 @@
+Hello This a Sample Text for testing Python File Handling.
+Hello World!
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum esse, eius minus delectus est voluptate,
+porro voluptas possimus minima deserunt,
+incidunt ut quibusdam vel ex rerum cupiditate. Unde, exercitationem eveniet.
+
+--Writing a new line in an Existing file...

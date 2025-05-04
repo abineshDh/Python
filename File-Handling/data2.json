@@ -1,0 +1,14 @@
+{
+    "id": 1,
+    "name": "Abinesh",
+    "age": 24,
+    "email": "abinesh21@gmail.com",
+    "Github": "abineshDh",
+    "Language": "Python",
+    "Experience": "Beginner",
+    "Projects": [
+        "Portfolio",
+        "ToDo App",
+        "Shopping Cart"
+    ]
+}
