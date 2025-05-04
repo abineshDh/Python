@@ -96,11 +96,60 @@ class Book:
 mybook = Book("Great Gatsby", 1990)
 print(mybook)
 
+
 # self - reference to the current instance of the class, allows to access the attributes and methods of the object
 # __init__ - it is a constructor method in python, automatically called when a new object is created. 
 # it initializes the attributes of the class.
 # __str__ - allows us to define custom string reperesentation of the object. 
 # defines a string represent when you print an object.
+
+
+# Excercise
+class PersonAccount:
+    def __init__(self, first_name, last_name, income, expenses):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.income = income
+        self.expenses = expenses
+        
+    def add_income(self, amount):
+        self.income += amount
+        print(f"Revenue added by Rs.{amount}. Revenue = Rs.{self.income}")
+        
+    def add_expense(self, amount):
+        self.expenses += amount 
+        print(f"Expenses added by Rs.{amount}. Expenses = Rs.{self.expenses}")
+        
+    def total_income(self):
+        print(f"Total Income is Rs.{self.income}")
+        
+    def total_expenses(self):
+        print(f"Total Expenses Rs.{self.expenses}")
+        
+    def account_info(self):
+        info = {
+            'First Name'    : self.first_name,
+            'Last Name'     : self.last_name,
+            'Full Name'     : self.first_name + self.last_name,
+            'Total Income'  : self.income,
+            'Total Expenses': self.expenses
+        }
+        for key, value in info.items():
+            print(f"{key:<15} : {value}")
+
+            
+account = PersonAccount(
+    first_name="Abinesh",
+    last_name="Kumar",
+    income=1000,
+    expenses=500
+)
+account.add_income(1000)
+account.add_expense(500)
+account.total_income()
+account.total_expenses()
+account.account_info()
+
 
 # @Class Variables
 # These are the variables that are shared across all instances of a class. It is defined at the class level, outside any methods. 
@@ -1237,4 +1286,114 @@ class Car(ABC):
 # | Abstract Method    | Must be overridden by subclasses             | 
 # | Concrete Method    | Already implemented, can be used as-is       | 
 
+
+# Python - **Interface module**
+# pure abstract methods in an abstract class - with no implementation logics in the abstract methods
+# interface contains a set of abstract methods that can be only instanciated by subclass 
+
+
+# Excercise
+# Abstract Payment System
+
+from abc import abstractmethod, ABC
+
+class Payments(ABC):
+    
+    @abstractmethod
+    def make_payment(self, amount):
+        pass
+    
+class CreditCardPayment(Payments):
+    def __init__(self, card_number):
+       self.card_number = card_number
+       
+    def make_payment(self, amount):
+        print(f"Processing credit card payment of ₹{amount} using card {self.card_number}")
+        
+class UPIPayment(Payments):
+    def __init__(self, upi_id):
+        self.upi_id = upi_id
+        
+    def make_payment(self, amount):
+         print(f"Processing UPI payment of ₹{amount} via {self.upi_id}")
+         
+class PayPalPayment(Payments):
+    def __init__(self, email):
+        self.email = email
+    
+    def make_payment(self, amount):
+        print(f"Processing PayPal payment of ₹{amount} using account {self.email}")
+
+payments = [
+    CreditCardPayment("1234-5678-9876"),
+    UPIPayment("abinesh@upi"),
+    PayPalPayment("abinesh@example.com")
+]
+
+for payment in payments:
+    payment.make_payment(1000)
+    
+# Fully Abstraction using Interface
+from abc import ABC, abstractmethod
+
+class PaymentMethod(ABC):
+    
+    @abstractmethod
+    def pay(self, amount:float) -> None:
+        pass
+    
+    @abstractmethod
+    def payment_status(self) -> None:
+        pass
+    
+class CreditCardPayment(PaymentMethod):
+    
+    def __init__(self, card_number, card_holder, cvv):
+        self.card_number = card_number
+        self.card_holder = card_holder
+        self.cvv = cvv
+        
+    def pay(self, amount:float) -> None:
+        print(f"{self.card_holder} paid Rs.{amount}")
+        
+    def payment_status(self) -> None:
+        print(
+            f'''
+            Card Number: {self.card_holder}
+            Card Number: {self.card_number}
+            Payment Transaction done successfully!
+            '''
+        )
+        
+class UPIPayment(PaymentMethod):
+    
+    def __init__(self, mobile_number, upi_id):
+        self.mobile_number = mobile_number
+        self.upi_id = upi_id                                                                                                                                                                                                                                                                                                                                                                                    
+        
+    def pay(self, amount:float) -> None:
+        print(f"{self.upi_id} paid Rs.{amount}")
+        
+    def payment_status(self) -> None:
+        print(
+            f'''
+            UPI ID       : {self.upi_id}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+            Mobile Number: {self.mobile_number}
+            Payment Transaction done successfully!
+            '''
+        )
+
+cc_payment = CreditCardPayment("1234-5678-9876-5432", "Abinesh", 123)
+cc_payment.pay(2500)
+cc_payment.payment_status()
+
+upi_payment = UPIPayment("abinesh@upi", "9876543210")
+upi_payment.pay(800)
+upi_payment.payment_status()
+
+# Interface = Job Description
+# Class = Employee
+# Object = Actual person doing the job
+# The job description tells what must be done. The employee (class) agrees to do all tasks. 
+# The person (object) performs them.
 
