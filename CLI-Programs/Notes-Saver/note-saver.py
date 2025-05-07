@@ -7,11 +7,11 @@
 import os
 from datetime import datetime
 
-# define file path
+# Define file path
 file_path = os.path.join('CLI-Programs', 'Notes-Saver', 'notes.txt')
 
-# check dir exists
-os.makedirs(os.path(file_path), exist_ok=True)
+# Check if the directory exists, create it if not
+os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
 while True:
     try:
@@ -55,6 +55,6 @@ while True:
                 print("Exiting the program.")
                 break
             case _:
-                print("[ERORR] Invalid option. Please try again.")
+                print("[ERROR] Invalid option. Please try again.")
     except ValueError:
         print('[ERROR] Please Enter a Valid Input')
